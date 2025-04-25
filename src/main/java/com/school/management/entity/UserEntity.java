@@ -38,7 +38,7 @@ public class UserEntity {
     private LocalDateTime createdOn;
 
     @Column(name = "created_by")
-    private String createdBy;
+    private Long createdBy;
 
     @Column(name = "updated_on")
     private LocalDateTime updatedOn;

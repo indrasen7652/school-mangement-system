@@ -12,4 +12,7 @@ public interface UserRepository extends JpaRepository<UserEntity,Long> {
 
     @Query(nativeQuery = true,value = "Select * From users where user_id=:username")
     UserEntity findByUserId(@Param("username") String username);
+
+    @Query(nativeQuery = true,value = "select * from users where user_id ILIKE ?1")
+    UserEntity checkUserIdExist(String userId);
 }

@@ -4,8 +4,12 @@ package com.school.management.controller;
 import com.school.management.constants.UrlConstants;
 import com.school.management.dto.LoginDTO;
 import com.school.management.dto.UserDTO;
+import com.school.management.entity.UserEntity;
+import com.school.management.entity.teacher.TeacherEntity;
+import com.school.management.exception.ValidationException;
 import com.school.management.kafka.ConsumerService;
 import com.school.management.kafka.ProducerService;
+import com.school.management.repository.UserRepository;
 import com.school.management.service.LoginService;
 import com.school.management.service.serviceImpl.AdminServiceImpl;
 import jakarta.validation.Valid;
@@ -26,6 +30,8 @@ public class AuthController {
     @Autowired
     ProducerService producerService;
 
+    @Autowired
+    UserRepository userRepository;
 
     @Autowired
     AdminServiceImpl adminService;
@@ -39,8 +45,10 @@ public class AuthController {
 
     @PostMapping(UrlConstants.VERSION_ONE+"admin")
     public ResponseEntity<?> AdminRegistration(@Valid @RequestBody UserDTO userDTO){
-        System.out.println(userDTO.getPassword());
-        System.out.println(userDTO.getUserId());
+        UserEntity userEntity=userRepository.checkUserIdExist(userDTO.getUserId());
+        if (userEntity!=null){
+            throw new ValidationException("User id Already exist");
+        }
         return ResponseEntity.status(HttpStatus.OK).body(adminService.createOrUpdateUser(userDTO));
     }
 

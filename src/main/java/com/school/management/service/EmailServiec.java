@@ -4,10 +4,7 @@ package com.school.management.service;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import javax.mail.Authenticator;
-import javax.mail.Message;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
+import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.List;
@@ -58,6 +55,7 @@ public class EmailServiec {
             }
             message.setSubject(subject);
             message.setContent(htmlContent, contentType);
+            Transport.send(message);
             System.out.println("Email sent successfully.");
         } catch (Exception e) {
             throw new Exception();

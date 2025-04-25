@@ -25,8 +25,6 @@ public class AdminServiceImpl implements AdminService {
     MapperStudent  studentMapper;
 
     public ResponseData createOrUpdateUser(UserDTO userDTO) {
-        System.out.println(userDTO.getPassword());
-        System.out.println(userDTO.getUserId());
         ResponseData responseData=new ResponseData();
         if (userDTO.getUid() == null) {
             UserEntity userEntity=MapperStudent.map1(userDTO);
@@ -34,14 +32,18 @@ public class AdminServiceImpl implements AdminService {
             userEntity.setCreatedOn(LocalDateTime.now());
             responseData.setMessage("Created");
             responseData.setSubMessage("Create Admin users");
-            responseData.setData(MapperStudent.map1(userRepository.save(userEntity)));
+            UserDTO userDTO1=MapperStudent.map1(userRepository.save(userEntity));
+            userDTO1.setPassword(null);
+            responseData.setData(userDTO1);
         } else {
             UserEntity userEntity =userRepository.findById(userDTO.getUid()).orElseThrow(()-> new UsernameNotFoundException("Admin Not found"));
             userEntity.setName(userDTO.getName());
             userEntity.setUpdatedOn(LocalDateTime.now());
             responseData.setMessage("Updated");
             responseData.setSubMessage("Updating Admin users");
-            responseData.setData(MapperStudent.map1(userRepository.save(userEntity)));
+            UserDTO userDTO1= MapperStudent.map1(userRepository.save(userEntity));
+            userDTO1.setPassword(null);
+            responseData.setData(userDTO1);
         }
         return responseData;
     }

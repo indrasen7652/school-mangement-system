@@ -14,11 +14,10 @@ public class UserDTO {
     private Long uid;
     private String name;
     private String userId;
-    private Short role;
     private String password;
     private Short status;
     private LocalDateTime createdOn;
-    private String createdBy;
+    private Long createdBy;
     private LocalDateTime updatedOn;
     private Long updatedBy;
 }
