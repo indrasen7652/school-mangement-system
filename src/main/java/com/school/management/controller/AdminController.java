@@ -1,6 +1,7 @@
 package com.school.management.controller;
 
 import com.school.management.constants.UrlConstants;
+import com.school.management.dto.DepartmentDTO;
 import com.school.management.dto.ResponseData;
 import com.school.management.dto.student.StudentDTO;
 import com.school.management.dto.teacher.TeacherDTO;
@@ -9,6 +10,7 @@ import com.school.management.entity.teacher.TeacherEntity;
 import com.school.management.exception.ValidationException;
 import com.school.management.repository.student.StudentRepository;
 import com.school.management.repository.teacher.TeacherRepository;
+import com.school.management.service.DepartmentService;
 import com.school.management.service.StudentService;
 import com.school.management.service.TeacherService;
 import jakarta.validation.Valid;
@@ -34,6 +36,9 @@ public class AdminController {
 
     @Autowired
     StudentService studentService;
+
+    @Autowired
+    DepartmentService departmentService;
 
     @PostMapping(UrlConstants.VERSION_ONE+"teacher/registration")
     public ResponseEntity<?> createTeacher(@Valid @RequestBody TeacherDTO teacherDTO){
@@ -147,4 +152,21 @@ public class AdminController {
     }
 
 
+    @PostMapping(UrlConstants.VERSION_ONE+"department/registration")
+    public ResponseEntity<?> registrationDepartment(@RequestBody DepartmentDTO departmentDTO){
+        ResponseData responseData=new ResponseData();
+        responseData.setMessage("Registration");
+        responseData.setSubMessage("Department registration successfully done");
+        responseData.setData(departmentService.registration(departmentDTO));
+        return ResponseEntity.status(HttpStatus.OK).body(responseData);
+    }
+
+    @GetMapping(UrlConstants.VERSION_ONE+"department/{departmentId}")
+    public ResponseEntity<?> getDepartmentById(@PathVariable Long departmentId){
+        ResponseData responseData=new ResponseData();
+        responseData.setMessage("Department Details");
+        responseData.setSubMessage("Get department details by department id");
+        responseData.setData(departmentService.getDepartmentById(departmentId));
+        return ResponseEntity.status(HttpStatus.OK).body(responseData);
+    }
 }

@@ -1,8 +1,10 @@
 package com.school.management.mapper;
 
+import com.school.management.dto.DepartmentDTO;
 import com.school.management.dto.teacher.TeacherAddressDTO;
 import com.school.management.dto.teacher.TeacherDTO;
 import com.school.management.dto.teacher.TeacherSubjectDTO;
+import com.school.management.entity.DepartmentEntity;
 import com.school.management.entity.teacher.TeacherAddress;
 import com.school.management.entity.teacher.TeacherEntity;
 import com.school.management.entity.teacher.TeacherSubject;
@@ -56,5 +58,14 @@ public class MapperTeacher {
     }
 
 
+    public static DepartmentDTO map(final DepartmentEntity departmentEntity){
+        ModelMapper modelMapper=new ModelMapper();
+        return modelMapper.map(departmentEntity,DepartmentDTO.class);
+    }
+
+    public static DepartmentEntity map(final DepartmentDTO departmentDTO){
+        ModelMapper modelMapper=new ModelMapper();
+        return modelMapper.map(departmentDTO,DepartmentEntity.class);
+    }
 
 }
