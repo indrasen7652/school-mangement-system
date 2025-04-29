@@ -28,7 +28,7 @@ public class NotificationScheduler {
     @Autowired
     StudentRepository studentRepository;
 
-    @Scheduled(cron = "0 0/2 * * * *", zone = "Asia/Kolkata")
+   // @Scheduled(cron = "0 0/2 * * * *", zone = "Asia/Kolkata")
     public void notificationSendRecordUserToday() {
         try {
             Long todayTeacherRegistration = teacherRepository.toDayCreatedTeacher();
